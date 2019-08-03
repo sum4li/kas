@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('account_id');
+            $table->uuid('account_id')->nullable();
             $table->string('transaction_type')->nullable();
             $table->date('transaction_date')->nullable();
             $table->string('name')->nullable();
