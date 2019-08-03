@@ -22,6 +22,10 @@
     <link href="{{asset('backend/vendor/select2/select2-bootstrap.min.css')}}" rel="stylesheet">
     {{-- font awesome picker --}}
     <link href="{{asset('backend/vendor/fontawesome-iconpicker/fontawesome-iconpicker.min.css')}}" rel="stylesheet">
+    <link href="{{asset('backend/vendor/uploadHBR/css/style.min.css')}}" rel="stylesheet">
+    {{-- animate css --}}
+    <link href="{{asset('backend/vendor/animate/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('backend/vendor/aos/css/aos.css')}}" rel="stylesheet">
     <style>
         
         body{
@@ -89,32 +93,12 @@
     </style>
          
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('backend/vendor/jquery/jquery.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/bootstrap-fileinput-master/js/plugins/sortable.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/bootstrap-fileinput-master/js/fileinput.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/bootstrap-fileinput-master/themes/fa/theme.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/bootstrap-fileinput-master/js/locales/id.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{asset('backend/vendor/jquery-easing/jquery.easing.min.js')}}" type="text/javascript"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{asset('backend/js/sb-admin-2.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/style.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/jquery-datatables.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/datatables-bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/select2/select2.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/fontawesome-iconpicker/fontawesome-iconpicker.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/bloodhound.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/typeahead.jquery.min.js')}}" type="text/javascript"></script>
+    
 
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -175,19 +159,27 @@
                 </div>
             </div>
         </div>
-    </div>
-    {{-- kurs modal --}}
-    @include('backend.component.modal-kurs')
+    </div>    
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{asset('backend/vendor/jquery/jquery.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript"></script>
+    {{-- <script src="{{asset('backend/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script> --}}
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{asset('backend/vendor/jquery-easing/jquery.easing.min.js')}}" type="text/javascript"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{asset('backend/js/sb-admin-2.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/js/style.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/js/jquery-datatables.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/js/datatables-bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/vendor/select2/select2.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/vendor/fontawesome-iconpicker/fontawesome-iconpicker.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/vendor/uploadHBR/js/modernizr.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/vendor/uploadHBR/js/uploadHBR.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/js/bloodhound.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/js/typeahead.jquery.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('backend/vendor/aos/js/aos.js')}}" type="text/javascript"></script>
     @stack('scripts')
-    <script>
-        @php
-            $rate = App\ExchangeRate::whereDate('created_at',date('Y-m-d'))->get()->count();
-        @endphp
-        @if($rate < 1)
-            $(window).on('load',function(){
-                $('#kurs').modal('show');
-            });
-        @endif
-    </script>
 </body>
 </html>

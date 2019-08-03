@@ -15,10 +15,10 @@ class setting_seeder extends Seeder
         $name=['Nama Toko','Alamat','Nomer Telepon','Email'];
         $type=['text','text','text','text'];
         $description=[
-            'TEG',
-            'Jl. Raya Serang Km.39,5 Kec. Parigi Serang',
+            'SM 04',
+            'Jl. Kacangan - Pelemrejo Km 1. Kacangan, Andong, Boyolali',
             '021-29335597',
-            'transecomet@transecomet.com'
+            'sekawanmuda04@gmail.com'
         ];
         for($i=0;$i<count($name);$i++){
 

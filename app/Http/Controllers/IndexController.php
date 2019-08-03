@@ -3,20 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Pages;
-use App\Article;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use OpenGraph;
-use SEOMeta;
 use App\Setting;
-use App\Menu;
-use App\Promo;
-use App\Portofolio;
-use App\Service;
-use App\Gallery;
 
 class IndexController extends Controller
 {

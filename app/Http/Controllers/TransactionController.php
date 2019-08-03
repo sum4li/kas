@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Transaction;
-use App\TransactionContainer;
-use App\TransactionCharge;
-use App\ExchangeRate;
-use App\Currency;
-use App\Invoice;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
@@ -15,21 +10,8 @@ use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Exports\TransactionExport;
 use Maatwebsite\Excel\Facades\Excel;
-
-use App\Transformers\CargoTypeTransformer;
-use App\Transformers\OriginTransformer;
-use App\Transformers\PodTransformer;
-use App\Transformers\PolTransformer;
-use App\Transformers\VesselTransformer;
-use App\Transformers\CommodityTransformer;
-use App\Transformers\FacilityTransformer;
-use App\Transformers\LocationTransformer;
-use App\Transformers\WarehouseTransformer;
-use App\Transformers\ManagerTransformer;
-use App\Transformers\StaffOperasionalTransformer;
-use App\Transformers\SalesmanTransformer;
-use App\Transformers\TruckingTransformer;
-use App\Transformers\DriverTransformer;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class TransactionController extends Controller
 {
@@ -37,17 +19,13 @@ class TransactionController extends Controller
     public function __construct()
     {
         $this->transaction = new Transaction();
-        $this->transactionContainer = new TransactionContainer();
-        $this->transactionCharge = new TransactionCharge();
-        $this->exchangeRate = new ExchangeRate();
-        $this->currency = new Currency();
-        $this->invoice = new Invoice();
     }
 
     // halaman utama transaksi
-    public function index()
+    public function index($transaction_type)
     {
-        return view('backend.transaction.index');        
+        $data = $this->transaction->where('transaction_type',$transaction_type)->paginate(5);
+        return view('backend.transaction.index',compact(['data','transaction_type']));        
     }
 
     // datatables source transaksi
@@ -92,37 +70,31 @@ class TransactionController extends Controller
     }
 
     // halaman buat transaksi
-    public function create()
+    public function create($transaction_type)
     {
-        return view('backend.transaction.create');
+        return view('backend.transaction.create',compact(['transaction_type']));
     }
 
     // simpan transaksi
     public function store(Request $request)
     {
         DB::beginTransaction();
-        try {
-            $request->merge([
-                'job_number'=>$this->generateJobNumber($request->transaction_type),
-                'spj_number'=>$this->generateSpjNumber()
-            ]);
-            $transaction = $this->transaction->create($request->all());
-            for ($i=0; $i < count($request->container_number) ; $i++) { 
-                $this->transactionContainer->create([
-                    'transaction_id'=>$transaction->id,
-                    'container_number'=>$request->input('container_number.'.$i),
-                    'seal_number'=>$request->input('seal_number.'.$i),
-                    'size'=>$request->input('size.'.$i),
-                    'qty'=>$request->input('qty.'.$i),
-                    'unit_id'=>$request->input('unit_id.'.$i),
-                    'weight'=>$request->input('weight.'.$i),
-                    'measurement'=>$request->input('measurement.'.$i),
-                    'commodity'=>$request->input('commodity.'.$i),
-                    'facility'=>$request->input('facility.'.$i)
+        try {            
+            if($request->has('image')){
+                $fileName = Str::uuid();
+                $file = $request->image->storeAs(
+                    'public/image/transaction',$fileName.'.'.$request->image->extension()
+                );
+                $request->merge([
+                    'images'=>'storage/image/transaction/'.$fileName.'.'.$request->image->extension()
                 ]);
             }
+            $request->merge([
+                'slug'=> str_slug($request->name)
+            ]);
+            $this->transaction->create($request->all());
             DB::commit();
-            return redirect()->route('transaction.index')->with('success-message','Data telah disimpan');
+            return redirect()->route('dashboard')->with('success-message','Data telah disimpan');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error-message',$e->getMessage());

@@ -13,31 +13,11 @@ class Transaction extends Model
 
     protected $table = 'transactions';
     protected $dates = ['deleted_at'];
-    protected $fillable = ['shipper_id','consignee_id','notify_id','agent_id','job_number','billing_number','transaction_type','cargo_type','etd','eta','origin','mbl','hbl','bc11','bc23','pos','sub_pos','location','delivery','warehouse','pol','pod','vessel','voyage','spj_number','trucking','driver','car_number','manager','staff_operasional','salesman','status','invoice_id'];
+    protected $fillable = ['name','slug','description','transaction_type','transaction_date','images','amount'];
     public $incrementing = false;
-
-    public function shipper()
+    
+    public function account()
     {
-        return $this->belongsTo('App\Customer');
-    }
-
-    public function consignee()
-    {
-        return $this->belongsTo('App\Customer');
-    }
-
-    public function notify()
-    {
-        return $this->belongsTo('App\Customer');
-    }
-
-    public function agent()
-    {
-        return $this->belongsTo('App\Customer');
-    }
-
-    public function invoice()
-    {
-        return $this->belongsTo('App\Invoice');
+        return $this->belongsTo('App\Account');
     }
 }

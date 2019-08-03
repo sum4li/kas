@@ -27,5 +27,7 @@ class user_sedeer extends Seeder
                 'password'=> Hash::make('rahasia'),
             ]);
         }
+
+        
     }
 }

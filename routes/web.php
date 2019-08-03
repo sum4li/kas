@@ -42,62 +42,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/role/{id}/destroy','RoleController@destroy')->name('role.destroy');
     Route::post('/admin/role/store','RoleController@store')->name('role.store');
     Route::post('/admin/role/{id}/update','RoleController@update')->name('role.update');
+
+    //account
+    Route::get('/admin/account','AccountController@index')->name('account.index');
+    Route::get('/admin/account/create','AccountController@create')->name('account.create');
+    Route::get('/admin/account/source','AccountController@source')->name('account.source');
+    Route::get('/admin/account/{id}/edit','AccountController@edit')->name('account.edit');
+    Route::get('/admin/account/{id}/show','AccountController@show')->name('account.show');
+    Route::get('/admin/account/{id}/destroy','AccountController@destroy')->name('account.destroy');
+    Route::post('/admin/account/store','AccountController@store')->name('account.store');
+    Route::post('/admin/account/{id}/update','AccountController@update')->name('account.update');
     
-    //customer
-    Route::get('/admin/customer','CustomerController@index')->name('customer.index');
-    Route::get('/admin/customer/create','CustomerController@create')->name('customer.create');
-    Route::get('/admin/customer/source','CustomerController@source')->name('customer.source');
-    Route::get('/admin/customer/{id}/edit','CustomerController@edit')->name('customer.edit');
-    Route::get('/admin/customer/{id}/show','CustomerController@show')->name('customer.show');
-    Route::get('/admin/customer/{id}/destroy','CustomerController@destroy')->name('customer.destroy');
-    Route::post('/admin/customer/store','CustomerController@store')->name('customer.store');
-    Route::post('/admin/customer/{id}/update','CustomerController@update')->name('customer.update');
-    Route::get('/admin/customer/{id}/get','CustomerController@get')->name('customer.get');
-    Route::get('/admin/customer/getCustomer','CustomerController@getCustomer')->name('customer.getCustomer');
-    // Route::get('/admin/customer/{search}/getCustomer','CustomerController@getCustomer')->name('customer.getCustomer');
     
-    //unit
-    Route::get('/admin/unit','UnitController@index')->name('unit.index');
-    Route::get('/admin/unit/create','UnitController@create')->name('unit.create');
-    Route::get('/admin/unit/source','UnitController@source')->name('unit.source');
-    Route::get('/admin/unit/{id}/edit','UnitController@edit')->name('unit.edit');
-    Route::get('/admin/unit/{id}/show','UnitController@show')->name('unit.show');
-    Route::get('/admin/unit/{id}/destroy','UnitController@destroy')->name('unit.destroy');
-    Route::post('/admin/unit/store','UnitController@store')->name('unit.store');
-    Route::post('/admin/unit/{id}/update','UnitController@update')->name('unit.update');
-    Route::get('/admin/unit/{id}/get','UnitController@get')->name('unit.get');
-    Route::get('/admin/unit/getUnit','UnitController@getUnit')->name('unit.getUnit');
-    // Route::get('/admin/unit/{search}/getUnit','UnitController@getUnit')->name('unit.getUnit');
-    
-    //exchangeRate
-    Route::get('/admin/exchangeRate','ExchangeRateController@index')->name('exchangeRate.index');
-    Route::get('/admin/exchangeRate/create','ExchangeRateController@create')->name('exchangeRate.create');
-    Route::get('/admin/exchangeRate/source','ExchangeRateController@source')->name('exchangeRate.source');
-    Route::get('/admin/exchangeRate/{id}/edit','ExchangeRateController@edit')->name('exchangeRate.edit');
-    Route::get('/admin/exchangeRate/{id}/show','ExchangeRateController@show')->name('exchangeRate.show');
-    Route::get('/admin/exchangeRate/{id}/destroy','ExchangeRateController@destroy')->name('exchangeRate.destroy');
-    Route::post('/admin/exchangeRate/store','ExchangeRateController@store')->name('exchangeRate.store');
-    Route::post('/admin/exchangeRate/{id}/update','ExchangeRateController@update')->name('exchangeRate.update');
-    Route::get('/admin/exchangeRate/{id}/get','ExchangeRateController@get')->name('exchangeRate.get');
-    Route::get('/admin/exchangeRate/getExchangeRate','ExchangeRateController@getExchangeRate')->name('exchangeRate.getExchangeRate');
-    // Route::get('/admin/exchangeRate/{search}/getExchangeRate','ExchangeRateController@getExchangeRate')->name('exchangeRate.getExchangeRate');
-    
-    //currency
-    Route::get('/admin/currency','CurrencyController@index')->name('currency.index');
-    Route::get('/admin/currency/create','CurrencyController@create')->name('currency.create');
-    Route::get('/admin/currency/source','CurrencyController@source')->name('currency.source');
-    Route::get('/admin/currency/{id}/edit','CurrencyController@edit')->name('currency.edit');
-    Route::get('/admin/currency/{id}/show','CurrencyController@show')->name('currency.show');
-    Route::get('/admin/currency/{id}/destroy','CurrencyController@destroy')->name('currency.destroy');
-    Route::post('/admin/currency/store','CurrencyController@store')->name('currency.store');
-    Route::post('/admin/currency/{id}/update','CurrencyController@update')->name('currency.update');
-    Route::get('/admin/currency/{id}/get','CurrencyController@get')->name('currency.get');
-    Route::get('/admin/currency/getCurrency','CurrencyController@getCurrency')->name('currency.getCurrency');
-    // Route::get('/admin/currency/{search}/getCurrency','CurrencyController@getCurrency')->name('currency.getCurrency');
     
     //transaction
-    Route::get('/admin/transaction','TransactionController@index')->name('transaction.index');
-    Route::get('/admin/transaction/create','TransactionController@create')->name('transaction.create');
+    Route::get('/admin/transaction/{transaction_type}','TransactionController@index')->name('transaction.index');
+    Route::get('/admin/transaction/create/{transaction_type}','TransactionController@create')->name('transaction.create');
     Route::get('/admin/transaction/source','TransactionController@source')->name('transaction.source');
     Route::get('/admin/transaction/{id}/edit','TransactionController@edit')->name('transaction.edit');
     Route::get('/admin/transaction/{id}/printJobSheet','TransactionController@printJobSheet')->name('transaction.printJobSheet');
@@ -108,16 +68,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/transaction/{id}/getContainer','TransactionController@getContainer')->name('transaction.getContainer');
     Route::post('/admin/transaction/store','TransactionController@store')->name('transaction.store');
     Route::post('/admin/transaction/{id}/update','TransactionController@update')->name('transaction.update');
-    Route::post('/admin/transaction/{id}/storeCharge','TransactionController@storeCharge')->name('transaction.storeCharge');
+
     Route::post('/admin/transaction/makeInvoice','TransactionController@makeInvoice')->name('transaction.makeInvoice');
     Route::get('/admin/transaction/{id}/editCharge/{charge_id}','TransactionController@editCharge')->name('transaction.editCharge');
     Route::get('/admin/transaction/{id}/destroyCharge/{charge_id}','TransactionController@destroyCharge')->name('transaction.destroyCharge');
     Route::post('/admin/transaction/{id}/updateCharge/{charge_id}','TransactionController@updateCharge')->name('transaction.updateCharge');
     
-    //invoice
-    Route::get('/admin/invoice','InvoiceController@index')->name('invoice.index');
-    Route::get('/admin/invoice/{where}','InvoiceController@where')->name('invoice.where');
-    Route::get('/admin/invoice/source/{status}','InvoiceController@source')->name('invoice.source');
     
     // notused
     // Route::get('/admin/transaction/history','TransactionController@history')->name('transaction.history');

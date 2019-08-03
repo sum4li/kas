@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExchangeRatesTable extends Migration
+class CreateTransactionDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateExchangeRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('exchange_rates', function (Blueprint $table) {
+        Schema::create('transaction_details', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('exchange_from_id');
-            $table->uuid('exchange_to_id');
-            $table->string('rates')->nullable();            
+            $table->uuid('transaction_id');
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('qty')->nullable();
+            $table->string('price')->nullable();
+            $table->string('amount')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +33,6 @@ class CreateExchangeRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exchange_rates');
+        Schema::dropIfExists('transaction_details');
     }
 }

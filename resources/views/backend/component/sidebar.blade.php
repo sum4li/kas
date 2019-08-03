@@ -1,7 +1,10 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-left justify-content-left" href="#">
+        <div class="sidebar-brand-icon">
+                {{App\Setting::where('slug','nama-toko')->get()->first()->description}}
+        </div>
         <div class="sidebar-brand-text">{{App\Setting::where('slug','nama-toko')->get()->first()->description}}</div>
     </a>
 
@@ -17,58 +20,21 @@
             <span>Dashboard</span>
         </a>
     </li>
-    @if (Auth::user()->role->slug == 'super-admin')
-    {{-- mata uang --}}
-    <li class="nav-item {{active('currency.index')}}">
-        <a class="nav-link" href="{{route('currency.index')}}">
-            <i class="fas fa-fw fa-dollar-sign"></i>
-            <span>Mata uang</span>
-        </a>
-    </li>        
-    @endif
+    
 
-    {{-- unit --}}
-    <li class="nav-item {{active('unit.index')}}">
-        <a class="nav-link" href="{{route('unit.index')}}">
-            <i class="fas fa-fw fa-box"></i>
-            <span>Unit</span>
-        </a>
-    </li>
-    {{-- nilai tukar --}}
-    <li class="nav-item {{active('exchangeRate.index')}}">
-        <a class="nav-link" href="{{route('exchangeRate.index')}}">
-            <i class="fas fa-fw fa-dollar-sign"></i>
-            <span>Rates</span>
-        </a>
-    </li>
-    {{-- customer --}}
-    <li class="nav-item {{active('customer.index')}}">
-        <a class="nav-link" href="{{route('customer.index')}}">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Customer</span>
-        </a>
-    </li>
     {{-- transaksi --}}
-    <li class="nav-item {{active('transaction.index')}}">
-        <a class="nav-link" href="{{route('transaction.index')}}">
-            <i class="fas fa-fw fa-book"></i>
-            <span>Transaction</span>
+    <li class="nav-item {{active('transaction.index','income')}}">
+        <a class="nav-link" href="{{route('transaction.index','income')}}">
+            <i class="fas fa-fw fa-download"></i>
+            <span>Pendapatan</span>
         </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{is_active('invoice.index') ? '':'collapsed'}}" href="#" data-toggle="collapse" data-target="#invoice" aria-expanded="true" aria-controls="invoice">
-            <i class="fas fa-fw fa-file-invoice-dollar"></i>
-            <span>Invoice</span>
+    </li>      
+    <li class="nav-item {{active('transaction.index','expense')}}">
+        <a class="nav-link" href="{{route('transaction.index','expense')}}">
+            <i class="fas fa-fw fa-upload"></i>
+            <span>Pengeluaran</span>
         </a>
-        <div id="invoice" class="collapse {{is_active('invoice.*')  ? 'show':''}}" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item {{active('invoice.where')}}" href="{{route('invoice.where','all')}}">Semua Invoice</a>
-            <a class="collapse-item {{active('invoice.where')}}" href="{{route('invoice.where','paid')}}">Invoice Terbayar</a>
-            <a class="collapse-item {{active('invoice.where')}}" href="{{route('invoice.where','unpaid')}}">Invoice Belum Terbayar</a>            
-            
-            </div>
-        </div>
-    </li>        
+    </li>      
     @if (Auth::user()->role->slug == 'super-admin')
     <li class="nav-item {{active('setting.index')}}">
         <a class="nav-link" href="{{route('setting.index')}}">
@@ -89,6 +55,5 @@
         </div>
     </li>                
     @endif
-
 </ul>
 <!-- End of Sidebar -->
