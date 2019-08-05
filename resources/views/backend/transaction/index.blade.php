@@ -41,8 +41,6 @@
                 </strong>
             </span>
         </li>
-
-        {{$data->links()}}
     </div>
 </div>
 @include('backend.transaction.modal-detail')

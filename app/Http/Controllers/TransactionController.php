@@ -24,7 +24,7 @@ class TransactionController extends Controller
     // halaman utama transaksi
     public function index($transaction_type)
     {
-        $data = $this->transaction->where('transaction_type',$transaction_type)->paginate(5);
+        $data = $this->transaction->where('transaction_type',$transaction_type)->get();
         return view('backend.transaction.index',compact(['data','transaction_type']));        
     }
 
