@@ -12,6 +12,7 @@ use App\Exports\TransactionExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class TransactionController extends Controller
 {
@@ -24,7 +25,7 @@ class TransactionController extends Controller
     // halaman utama transaksi
     public function index($transaction_type)
     {
-        $data = $this->transaction->where('transaction_type',$transaction_type)->get();
+        $data = $this->transaction->where('transaction_type',$transaction_type)->orderBy('transaction_date','desc')->orderBy('created_at','desc')->get();
         return view('backend.transaction.index',compact(['data','transaction_type']));        
     }
 
@@ -79,12 +80,23 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-        try {            
+        try {             
+            
             if($request->has('image')){
                 $fileName = Str::uuid();
-                $file = $request->image->storeAs(
-                    'public/image/transaction',$fileName.'.'.$request->image->extension()
-                );
+                $extension = $request->image->extension();
+                $path = 'public/image/transaction/'.$fileName.'.'.$extension;
+
+                $img = Image::make($request->image)->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+
+                Storage::put($path, (string) $img->encode());
+                
+                // $file = $request->image->storeAs(
+                //     'public/image/transaction',$fileName.'.'.$request->image->extension()
+                // );
                 $request->merge([
                     'images'=>'storage/image/transaction/'.$fileName.'.'.$request->image->extension()
                 ]);
@@ -94,7 +106,7 @@ class TransactionController extends Controller
             ]);
             $this->transaction->create($request->all());
             DB::commit();
-            return redirect()->route('dashboard')->with('success-message','Data telah disimpan');
+            return redirect()->back()->with('success-message','Data telah disimpan');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error-message',$e->getMessage());

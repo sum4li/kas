@@ -3,7 +3,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-0">
                 <div class="modal-header rounded-0 bg-gradient-primary">
-                    <h5 class="modal-title text-white">Selesaikan Transaksi</h5>
+                    <h5 class="modal-title text-white">Detail Transaksi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" class="text-white">&times;</span>
                     </button>
