@@ -136,25 +136,30 @@ class TransactionController extends Controller
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        try {            
-            $this->transaction->find($id)->update($request->all());
-            $this->transactionContainer->where('transaction_id',$id)->delete();
-            for ($i=0; $i < count($request->container_number) ; $i++) { 
-                $this->transactionContainer->create([
-                    'transaction_id'=>$id,
-                    'container_number'=>$request->input('container_number.'.$i),
-                    'seal_number'=>$request->input('seal_number.'.$i),
-                    'size'=>$request->input('size.'.$i),
-                    'qty'=>$request->input('qty.'.$i),
-                    'unit_id'=>$request->input('unit_id.'.$i),
-                    'weight'=>$request->input('weight.'.$i),
-                    'measurement'=>$request->input('measurement.'.$i),
-                    'commodity'=>$request->input('commodity.'.$i),
-                    'facility'=>$request->input('facility.'.$i)
+        try { 
+            if($request->has('image')){
+                $fileName = Str::uuid();
+                $extension = $request->image->extension();
+                $path = 'public/image/transaction/'.$fileName.'.'.$extension;
+
+                $img = Image::make($request->image)->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                });
+
+                Storage::put($path, (string) $img->encode());
+                
+                // $file = $request->image->storeAs(
+                //     'public/image/transaction',$fileName.'.'.$request->image->extension()
+                // );
+                $request->merge([
+                    'images'=>'storage/image/transaction/'.$fileName.'.'.$request->image->extension()
                 ]);
-            }
+            }           
+            $this->transaction->find($id)->update($request->all());
+            
             DB::commit();
-            return redirect()->route('transaction.index')->with('success-message','Data telah d irubah');
+            return redirect()->route('transaction.index',$this->transaction->find($id)->transaction_type)->with('success-message','Data telah d irubah');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error-message',$e->getMessage());
@@ -166,7 +171,7 @@ class TransactionController extends Controller
     public function destroy($id)
     {
         $this->transaction->destroy($id);
-        return redirect()->route('transaction.index')->with('success-message','Data telah dihapus');
+        return redirect()->back()->with('success-message','Data telah dihapus');
     }
 
     public function print($id){

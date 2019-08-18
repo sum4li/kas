@@ -20,7 +20,7 @@
     <div class="list-group list-group-flush">        
         
         @foreach ($data as $key => $row)
-        <button type="button" class="list-group-item list-group-item-action mt-1 shadow-sm" style="border: none;" data-aos="fade-up" data-aos-duration="500" data-aos-delay="{{$loop->iteration}}00" data-toggle="modal" data-target="#detail" data-name="{{$row->name}} " data-description="{{$row->description}}" data-image="{{$row->images == NULL ? asset('backend/img/no-image.png'):asset($row->images)}}" data-transaction_date="{{Carbon\Carbon::parse($row->transaction_date)->format('d M y')}}" data-amount="{{'Rp. '.number_format($row->amount,0,',','.')}}">
+        <button type="button" class="list-group-item list-group-item-action mt-1 shadow-sm" style="border: none;" data-aos="fade-up" data-aos-duration="500" data-edit-button="{{route('transaction.edit',$row->id)}}" data-delete-button="{{route('transaction.destroy',$row->id)}}" data-aos-delay="{{$loop->iteration}}00" data-toggle="modal" data-target="#detail" data-name="{{title_case($row->name)}} " data-description="{{$row->description}}" data-image="{{$row->images == NULL ? asset('backend/img/no-image.png'):asset($row->images)}}" data-transaction_date="{{Carbon\Carbon::parse($row->transaction_date)->format('d M y')}}" data-amount="{{'Rp. '.number_format($row->amount,0,',','.')}}">
             <span class="text-dark">
                 {{title_case(str_limit($key+1 .". ".$row->name,20))}}
             </span>
@@ -85,10 +85,13 @@ $(document).ready(function () {
 
     // DETAIL
     $('#detail').on('shown.bs.modal', function (event) {        
+        window.location.hash = "modal";
         var button = $(event.relatedTarget); // Button that triggered the modal
         var image = button.data('image'); // Extract info from data-* attributes        
         var name = button.data('name'); // Extract info from data-* attributes        
         var amount = button.data('amount'); // Extract info from data-* attributes        
+        var edit_button = button.data('edit-button'); // Extract info from data-* attributes        
+        var delete_button = button.data('delete-button'); // Extract info from data-* attributes        
         var transaction_date = button.data('transaction_date'); // Extract info from data-* attributes        
         var description = button.data('description'); // Extract info from data-* attributes                
         
@@ -98,14 +101,31 @@ $(document).ready(function () {
         modal.find('#amount').text(amount);
         modal.find('#description').text(description);
         modal.find('#transaction_date').text(transaction_date);
+        modal.find('#edit-button').attr('href',edit_button);
+        modal.find('#delete-button').attr('href',delete_button);
 
         $('#detail').on('hidden.bs.modal', function (event) {        
             modal.find('#image').removeAttr('src',image);
+            modal.find('#edit-button').removeAttr('href',edit_button);
+            modal.find('#delete-button').removeAttr('href',delete_button);
             modal.find('#name').text('');
             modal.find('#amount').text('');
             modal.find('#description').text('');
             modal.find('#transaction_date').text('');
         });
+    });
+
+    $(window).on('hashchange', function (event) {
+        if(window.location.hash != "#modal") {
+            $('#detail').modal('hide');
+        }
+    });
+
+    uploadHBR.init({
+        "target": "#uploads",
+        "textNew": "Add Photo",
+        // "textNew": "<i class='fa fa-plus'></i>",
+        "max":1
     });
     
 });

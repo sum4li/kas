@@ -17,6 +17,12 @@
                         <span class="text-primary font-weight-bold" id="transaction_date" style="font-size: 0.75rem;"></span>
                         <span class="text-success font-weight-bold float-right" id="amount" style="font-size: 1rem;"></span>
                         <p class="card-text" id="description"></p>
+                        <a class="btn btn-success btn-sm" id="edit-button">
+                            Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" id="delete-button">
+                            Hapus
+                        </a>
                     </div>
                 </div>
             </div>

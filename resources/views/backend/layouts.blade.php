@@ -15,12 +15,9 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link href="{{asset('backend/css/datatables-bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{asset('backend/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet">
-    <link href="{{asset('backend/vendor/select2/select2.min.css')}}" rel="stylesheet">
-    <link href="{{asset('backend/vendor/select2/select2-bootstrap.min.css')}}" rel="stylesheet">
     
+    <link href="{{asset('backend/vendor/uploadHBR/css/style.min.css')}}" rel="stylesheet">
     {{-- animate css --}}
-    {{-- <link href="{{asset('backend/vendor/animate/animate.css')}}" rel="stylesheet"> --}}
     <link href="{{asset('backend/vendor/aos/css/aos.css')}}" rel="stylesheet">
     <style>
         
@@ -29,69 +26,15 @@
         }
         label{
             font-weight: bolder;
-        }
+        }      
         
-        .typeahead {
-            z-index: 1051;
-        }
 
-        /*If using icon span before input, like <i class="fa fa-asterisk prefix"></i>*/
-        span.twitter-typeahead {
-            width: 100%;
-            /* width: calc(100%); */
-            /* margin-left: 3rem; */
-        }
-
-        /* Aspect of the dropdown of results*/
-        .typeahead.dropdown-menu,
-        span.twitter-typeahead .tt-menu {
-            margin-top: 0.75rem;
-            min-width: 100%;
-            background: white;
-            /*as large as input*/
-            border: none;
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
-            border-radius: 3px;
-            /* font-size: 1.2rem; */
-        }
-
-        /*Aspect of results, done*/
-        span.twitter-typeahead .tt-suggestion {            
-            color: #4285F4;
-            cursor: pointer;
-            padding: .25rem .5rem;
-            text-transform: capitalize;
-            /* font-weight: 400; */
-        }
-
-        /*Hover a result, done*/
-        span.twitter-typeahead .active.tt-suggestion,
-        span.twitter-typeahead .tt-suggestion.tt-cursor,
-        span.twitter-typeahead .active.tt-suggestion:focus,
-        span.twitter-typeahead .tt-suggestion.tt-cursor:focus,
-        span.twitter-typeahead .active.tt-suggestion:hover,
-        span.twitter-typeahead .tt-suggestion.tt-cursor:hover {
-            background-color: #4285F4;
-            color: #fff;
-            border-radius: 3px;
-            /* background-color: #EEEEEE;
-            color: #4285F4; */
-        }
-
+        
         label.active {
             color: #4285F4 !important;
         }
 
-        //datatables
-        .table {
-            font-size: 11px;
-        }
     </style>
-         
-
-    
-
-
 </head>
 
 <body id="page-top" class="">
@@ -159,8 +102,6 @@
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('backend/vendor/jquery/jquery.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js')}}" type="text/javascript"></script>
-    {{-- <script src="{{asset('backend/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script> --}}
-
     <!-- Core plugin JavaScript-->
     <script src="{{asset('backend/vendor/jquery-easing/jquery.easing.min.js')}}" type="text/javascript"></script>
 
@@ -169,12 +110,8 @@
     <script src="{{asset('backend/js/style.js')}}" type="text/javascript"></script>
     <script src="{{asset('backend/js/jquery-datatables.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('backend/js/datatables-bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/select2/select2.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/vendor/fontawesome-iconpicker/fontawesome-iconpicker.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('backend/vendor/uploadHBR/js/modernizr.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('backend/vendor/uploadHBR/js/uploadHBR.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/bloodhound.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('backend/js/typeahead.jquery.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('backend/vendor/aos/js/aos.js')}}" type="text/javascript"></script>
     @stack('scripts')
 </body>
