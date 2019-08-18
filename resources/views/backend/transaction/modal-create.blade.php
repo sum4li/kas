@@ -49,7 +49,7 @@
                                 <div class="col">
                                     <div class="form-gorup">
                                         <button type="submit" class="btn btn-primary btn-sm shadow-sm">Simpan</button>
-                                        <a class="btn btn-light btn-sm shadow-sm" href="{{route('dashboard')}}">Batal</a>
+                                        <button type="button" class="btn btn-light btn-sm shadow-sm" href="#" data-dismiss="">Batal</button>
                                         {{-- <a class="btn btn-light btn-sm shadow-sm" href="{{route('transaction.index')}}">Batal</a> --}}
                                     </div>
                                 </div>
