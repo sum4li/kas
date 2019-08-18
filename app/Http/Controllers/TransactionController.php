@@ -87,16 +87,16 @@ class TransactionController extends Controller
                 $extension = $request->image->extension();
                 $path = 'public/image/transaction/'.$fileName.'.'.$extension;
 
-                $img = Image::make($request->image->getRealPath())->resize(500, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                });
+                // $img = Image::make($request->image->getRealPath())->resize(500, null, function ($constraint) {
+                //     $constraint->aspectRatio();
+                //     $constraint->upsize();
+                // });
 
-                Storage::put($path, (string) $img->encode());
+                // Storage::put($path, (string) $img->encode());
                 
-                // $file = $request->image->storeAs(
-                //     'public/image/transaction',$fileName.'.'.$request->image->extension()
-                // );
+                $file = $request->image->storeAs(
+                    'public/image/transaction',$fileName.'.'.$request->image->extension()
+                );
                 $request->merge([
                     'images'=>'storage/image/transaction/'.$fileName.'.'.$request->image->extension()
                 ]);
@@ -142,16 +142,16 @@ class TransactionController extends Controller
                 $extension = $request->image->extension();
                 $path = 'public/image/transaction/'.$fileName.'.'.$extension;
 
-                $img = Image::make($request->image->getRealPath())->resize(500, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                    $constraint->upsize();
-                });
+                // $img = Image::make($request->image->getRealPath())->resize(500, null, function ($constraint) {
+                //     $constraint->aspectRatio();
+                //     $constraint->upsize();
+                // });
 
-                Storage::put($path, (string) $img->encode());
+                // Storage::put($path, (string) $img->encode());
                 
-                // $file = $request->image->storeAs(
-                //     'public/image/transaction',$fileName.'.'.$request->image->extension()
-                // );
+                $file = $request->image->storeAs(
+                    'public/image/transaction',$fileName.'.'.$request->image->extension()
+                );
                 $request->merge([
                     'images'=>'storage/image/transaction/'.$fileName.'.'.$request->image->extension()
                 ]);
