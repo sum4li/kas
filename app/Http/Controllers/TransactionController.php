@@ -87,7 +87,7 @@ class TransactionController extends Controller
                 $extension = $request->image->extension();
                 $path = 'public/image/transaction/'.$fileName.'.'.$extension;
 
-                $img = Image::make($request->image->getRealPath())->resize(300, null, function ($constraint) {
+                $img = Image::make($request->image->getRealPath())->resize(500, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
@@ -142,7 +142,7 @@ class TransactionController extends Controller
                 $extension = $request->image->extension();
                 $path = 'public/image/transaction/'.$fileName.'.'.$extension;
 
-                $img = Image::make($request->image->getRealPath())->resize(300, null, function ($constraint) {
+                $img = Image::make($request->image->getRealPath())->resize(500, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 });
