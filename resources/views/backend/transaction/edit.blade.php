@@ -39,7 +39,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label>Gambar</label>
-                            <input type="file" name="image" id="">
+                            <div id="uploads"></div>
                         </div>
                     </div>                    
                 </div>
