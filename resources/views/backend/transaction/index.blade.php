@@ -22,7 +22,7 @@
         @foreach ($data as $key => $row)
         <button type="button" class="list-group-item list-group-item-action mt-1 shadow-sm" style="border: none;" data-aos="fade-up" data-aos-duration="500" data-aos-delay="{{$loop->iteration}}00" data-toggle="modal" data-target="#detail" data-name="{{$row->name}} " data-description="{{$row->description}}" data-image="{{$row->images == NULL ? asset('backend/img/no-image.png'):asset($row->images)}}" data-transaction_date="{{Carbon\Carbon::parse($row->transaction_date)->format('d M y')}}" data-amount="{{'Rp. '.number_format($row->amount,0,',','.')}}">
             <span class="text-dark">
-                {{str_limit($key+1 .". ".$row->name,20)}}
+                {{title_case(str_limit($key+1 .". ".$row->name,20))}}
             </span>
             <span class="text-primary float-right">
                 Rp. {{number_format($row->amount,0,'.',',')}}
@@ -45,14 +45,11 @@
 </div>
 @include('backend.transaction.modal-detail')
 @include('backend.transaction.modal-create')
-{{-- @include('backend.transaction.modal-complete') --}}
 @endsection
 @push('scripts')
 <script src="{{ asset('backend/js/sweet-alert.min.js') }}"></script>
 <script>
 $(document).ready(function () {
-
-    
     $('#transaction-table').on('click','a.delete-data',function(e) {
         e.preventDefault();
         var delete_link = $(this).attr('href');
@@ -110,15 +107,6 @@ $(document).ready(function () {
             modal.find('#transaction_date').text('');
         });
     });
-
-    // UPLOAD HBR PLUGINS
-    uploadHBR.init({
-        "target": "#uploads",
-        "textNew": "Add Photo",
-        // "textNew": "<i class='fa fa-plus'></i>",
-        "max":1
-    });
-
     
 });
 </script>

@@ -14,17 +14,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
-    {{-- <link href="{{asset('backend/css/bootstrap.min.css')}}" rel="stylesheet"> --}}
     <link href="{{asset('backend/css/datatables-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('backend/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet">
-    <link href="{{asset('backend/vendor/bootstrap-fileinput-master/css/fileinput.min.css')}}" rel="stylesheet">
     <link href="{{asset('backend/vendor/select2/select2.min.css')}}" rel="stylesheet">
     <link href="{{asset('backend/vendor/select2/select2-bootstrap.min.css')}}" rel="stylesheet">
-    {{-- font awesome picker --}}
-    <link href="{{asset('backend/vendor/fontawesome-iconpicker/fontawesome-iconpicker.min.css')}}" rel="stylesheet">
-    <link href="{{asset('backend/vendor/uploadHBR/css/style.min.css')}}" rel="stylesheet">
+    
     {{-- animate css --}}
-    <link href="{{asset('backend/vendor/animate/animate.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('backend/vendor/animate/animate.css')}}" rel="stylesheet"> --}}
     <link href="{{asset('backend/vendor/aos/css/aos.css')}}" rel="stylesheet">
     <style>
         
