@@ -1,3 +1,8 @@
+@php
+    function setting($slug){
+        return App\Setting::where('slug',$slug)->get()->first()->description;
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +12,13 @@
     <meta name="keywords" content="{{setting('keywords')}}, @yield('keywords')">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {!! SEOMeta::generate() !!}
+
+    {!! OpenGraph::generate() !!}
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title -->
-    <title> | Home</title>
+    <title>{{setting('title')}} | Home</title>
     <!-- Favicon -->
     <link rel="icon" href="{{asset('frontend/img/brand/favicon.png')}}">
     <!-- Core Stylesheet -->

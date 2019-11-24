@@ -7,75 +7,24 @@ use Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Setting;
+use App\Transaction;
 
 class IndexController extends Controller
 {
     public function __construct()
     {
-        $this->article = new Article();
-        $this->portofolio = new Portofolio();
-        $this->pages = new Pages();
-        $this->setting = new Setting();
-        $this->menu = new Menu();
-        $this->promo = new Promo();
-        $this->service = new Service();
-        $this->gallery  = new Gallery();
+        $this->transaction = new Transaction();
     }
 
     public function index(){
-        SEOMeta::setDescription($this->setting->where('slug','description')->get()->first()->description);
-        OpenGraph::setDescription($this->setting->where('slug','description')->get()->first()->description);
-        OpenGraph::setTitle('Digsa.id | Home');
-        OpenGraph::addProperty('type', 'pages');
-        OpenGraph::addImage(asset('frontend/img/brand/digsa-color.png'));
-        return view('frontend.layouts');
+        $transaction  = $this->transaction;  
+        $income_transaction =$this->transaction->where('transaction_type','income')->get();
+        $expense_transaction =$this->transaction->where('transaction_type','expense')->get();
+        $saldo = $income_transaction->sum('amount') - $expense_transaction->sum('amount');
+        return view('backend.component.index',compact(['transaction','income_transaction','expense_transaction','saldo']));
     }
 
-    public function menu($slug_menu,$slug_detail=null){
-        $menu = $this->menu->where('slug',$slug_menu)->get();
-        if($menu->count() > 0){
-            if(!($slug_detail)){ // jika slug detail kosong
-                $model = $menu->first()->menu_type->slug;
-                $data =  $this->$model->where('menu_id',$menu->first()->id);
-                if($data->get()->count() > 0){
-                    if($model == 'pages'){
-                        // SEO
-                        SEOMeta::setDescription(strip_tags($data->get()->first()->description));
-                        OpenGraph::setDescription(strip_tags($data->get()->first()->description));
-                    }else{
-                        SEOMeta::setDescription('Digsa.id | '.title_case($menu->first()->name));
-                        OpenGraph::setDescription('Digsa.id | '.title_case($menu->first()->name));
-                    }
-                }else{
-                    SEOMeta::setDescription('Digsa.id | '.title_case($menu->first()->name));
-                    OpenGraph::setDescription('Digsa.id | '.title_case($menu->first()->name));
-                }
-                    OpenGraph::setTitle('Digsa.id | '.title_case($menu->first()->name));
-                    OpenGraph::addProperty('type', 'pages');
-                    OpenGraph::addImage(asset('frontend/img/brand/digsa-color.png'));
-
-                return view('frontend.'.$model.'.index',compact(['data','menu']));
-            }else{
-                $model = $menu->first()->menu_type->slug;
-                $data =  $this->$model->where('menu_id',$menu->first()->id)->where('slug',$slug_detail);
-                if ($this->$model->where('menu_id',$menu->first()->id)->where('slug',$slug_detail)->get()->count() > 0){
-                    // SEO
-                    SEOMeta::setDescription(!($data->get()->first()->description) ? strip_tags($data->get()->first()->description):'Digsa.id| Halaman '.title_case($menu->first()->name));
-                    OpenGraph::setDescription(!($data->get()->first()->description) ? strip_tags($data->get()->first()->description):'Digsa.id| Halaman '.title_case($menu->first()->name));
-                    OpenGraph::setTitle('Digsa.id | '.title_case($data->get()->first()->name));
-                    OpenGraph::addProperty('type', 'pages');
-                    OpenGraph::addImage(asset('frontend/img/brand/digsa-color.png'));
-
-                    return view('frontend.'.$model.'.show',compact(['data','menu']));
-                }else{
-                    return view('frontend.component.404');
-                }
-            }
-        }else{
-            return view('frontend.component.404');
-        }
-    }
+    
 
 
 }

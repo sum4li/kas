@@ -9,7 +9,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'LoginController@showLoginForm')->name('login');
+Route::get('/', 'IndexController@index')->name('index');
+Route::get('/admin', 'LoginController@showLoginForm')->name('login');
 Route::post('login', 'LoginController@login')->name('proceed-login');
 
 Route::middleware(['auth'])->group(function () {
